@@ -13,12 +13,15 @@ The idea and original 3D printer .STL files came from another project (https://w
 * Adafruit I2S Audio Amp (https://www.adafruit.com/product/3006)
 * Adafruit Mini NeoPixels (https://www.adafruit.com/product/2959)
   * You will only need 20 NeoPixels but you need ones with 0.66"/17mm spacing between LEDs to align properly with the teeth.
-  * I went with the "Mini" NeoPixels due to the lower power requirement and to be sure I can just power everything through the Feather. They are bright enough if you have pretty clear PLA for the teeth and eyes. Regular sized NeoPixels might work but have not been tested.
+  * I went with the "Mini" NeoPixels due to the lower power requirement to be sure I can power everything through the Feather. They are bright enough if you have pretty clear PLA for the teeth and eyes. Regular sized NeoPixels might work but have not been tested.
 * AdaFruit Mini PIR Motion Sensor (https://www.adafruit.com/product/4871) 
 * Speaker
   * You need a square 50mm (2 inch) 4-8ohm speaker. There's only about 52mm clearance for mounting.
+* Power Supply
+  * You need a power supply that can support 20 NeoPixels, the microcontroller, amp, and speaker. I used the official Raspberry Pi power supply because it's cheap, small, and can provide 3A. I would think that maybe 1A would be sufficient, but there's lots of variables in play.
+  * https://www.adafruit.com/product/4298  
 * PLA / Printing
-  * You will need some clear/transparent/translucent PLA or other filliment for printing the teeth and eyes so the LEDs can light them up. How you print and/or paint the rest is up to you.  
+  * You will need some clear/transparent/translucent PLA or other filliment for printing the teeth and eyes so the LEDs can light them up. How you print and/or paint the rest is up to you.
 
 ## Audio Files
 For copyright reasons no audio files are included. You'll have to find them online and convert them down to a low enough bitrate your microcontroller can support and small enough file sizes for the flash storage limitations . You can use the following guide to convert your files (https://learn.adafruit.com/microcontroller-compatible-audio-file-conversion).
