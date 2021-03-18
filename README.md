@@ -1,4 +1,4 @@
-This is a talking Bender head from Futurama. Controlled from a microcontroller and CircuitPython the head talks and has LEDs that show random patterns when talking and idle. The basic features are:
+This is a talking Bender head from Futurama. Controlled by a microcontroller and CircuitPython the head talks and has LEDs that show random patterns when talking and idle. The basic features are:
 
 * Plays random audio files at random intervals
 * 20 programmable LEDs (NeoPixels)
@@ -22,4 +22,23 @@ The idea and original 3D printer .STL files came from another project (https://w
 
 ## Audio Files
 For copyright reasons no audio files are included. You'll have to find them online and convert them down to a low enough bitrate your microcontroller can support and small enough file sizes for the flash storage limitations . You can use the following guide to convert your files (https://learn.adafruit.com/microcontroller-compatible-audio-file-conversion).
+
+## Config Options
+Configurable options include:
+* Min/max wait times between playing random audio
+* Wait timer between motion activated audio
+
+## Modes
+There are 3 modes, controlled by pushing the antenna down (it's also a button). Mode changes are indicated by lighting up 1, 2, or 3 teeth. Push and hold antenna down until teeth show the mode change.
+1. Regular mode - audio on, motion detector on
+2. Regular mode - audio on, motion detector off
+3. Silent mode - audio off
+
+
+
+
+
+
+
+
 
