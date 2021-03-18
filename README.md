@@ -9,7 +9,7 @@ The idea and original 3D printer .STL files came from another project (https://w
 
 ## Parts List
 * Adafruit Feather RP2040 (https://www.adafruit.com/product/4884)
-  * Which microcontroller you use is flexible as long as it can support the inputs, outputs, and the CircuitPython modules you need, mainly audiobusio and optionally audiomp3. This project does not use any analog inputs or outputs. The main concerns is storage space for audio files, which is extremely limited on microcontrollers. The Adafruit RP2040 boards have 8MB of flash for storing audio files. Adafruit also has support for MP3 audio on their RP2040 boards to help with the storage limits. 
+  * Which microcontroller you use is flexible as long as it can support the inputs, outputs, and the CircuitPython modules you need, mainly audiobusio and optionally audiomp3. This project does not use any analog inputs or outputs. The main concern is storage space for audio files, which is extremely limited on microcontrollers. The Adafruit RP2040 boards have 8MB of flash for storing audio files. Adafruit also has support for MP3 audio on their RP2040 boards to help with the storage limits. 
 * Adafruit I2S Audio Amp (https://www.adafruit.com/product/3006)
 * Adafruit Mini NeoPixels (https://www.adafruit.com/product/2959)
   * You will only need 20 NeoPixels but you need ones with 0.66"/17mm spacing between LEDs to align properly with the teeth.
