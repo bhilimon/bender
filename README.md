@@ -16,7 +16,7 @@ The original 3D model came from another project (https://www.thingiverse.com/thi
   * I went with the "Mini" NeoPixels due to the lower power requirement to be sure I can power everything through the Feather. They are bright enough if you have pretty clear PLA for the teeth and eyes. Regular sized NeoPixels might work but have not been tested.
 * Adafruit Mini PIR Motion Sensor (https://www.adafruit.com/product/4871) 
 * Speaker
-  * You need a square 50mm (2 inch) 4-8ohm speaker. There is only about 52mm clearance for mounting. I have included 3D models for a 40mm and 42mm hole spacing since there doesn't seem to be a standard. An 8ohm speaker will use less power and is reccomended.
+  * You need a square 50mm (2 inch) 4-8ohm speaker. There is only about 52mm clearance for mounting. There are 3D models for a 40mm and 42mm hole spacing since there doesn't seem to be a standard. An 8ohm speaker will use less power and is reccomended.
 * Power Supply
   * You need a USB-C power supply that can support 20 NeoPixels, the microcontroller, the amp, and a speaker. I used the official Raspberry Pi power supply because it's cheap, small, and can provide 3A. I would think that 1A would be plenty sufficient, but there's lots of variables in play. The 20 NeoPixels alone can in theory pull 400mA.
   * https://www.adafruit.com/product/4298  
