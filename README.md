@@ -22,7 +22,7 @@ The original 3D model came from another project (https://www.thingiverse.com/thi
 * PLA / Printing
   * You will need some clear/transparent/translucent PLA or other filliment for printing the teeth and eyes so the LEDs can light them up. How you print and/or paint the rest is up to you.
 * Button
-  * You need a small button to mount inside the antenna base. I used a basic 6mm (L) x 6mm (W) x 5mm (H) breadboard button. If you use a different size switch you might have to tweak the 3D models.
+  * You need a small button to mount inside the antenna base. I just glued a basic 6mm x 6mm x 5mm (H) breadboard button. If you use a different size switch you might have to tweak the two 3D models for the antenna parts.
 
 ## Audio Files
 For copyright reasons no audio files are included. You'll have to find them online and convert them down to a low enough bitrate your microcontroller can support and small enough file sizes for the flash storage limitations . You can use the following guide to convert your files (https://learn.adafruit.com/microcontroller-compatible-audio-file-conversion).
@@ -34,9 +34,9 @@ Configurable options include:
 
 ## Modes
 There are 3 modes, controlled by pushing the antenna down (it's also a button). Mode changes are indicated by lighting up 1, 2, or 3 teeth. Push and hold antenna down until teeth show the mode change.
-1. Regular mode - audio on, motion detector on
-2. Regular mode - audio on, motion detector off
-3. Silent mode - audio off
+1. Audio on, motion detector on
+2. Audio on, motion detector off
+3. Audio off
 
 
 
