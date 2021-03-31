@@ -16,11 +16,11 @@ General assembly guide.
 
 # Antenna
 1. Wire motion detector and install in antenna. It's a firm fit but should snap in.
-2. Wire the mode buttom and install (glue) in antenna-base. The edge of the antenna should rest on the botton. Be sure to verify button placement before you glue.
+2. Wire the mode button and install (glue) in antenna-base. The edge of the antenna should rest on the button. Be sure to verify button placement before you glue.
 
 # Last Steps
-* Install controller and amp with (3) M2 screws.
-* Wire everything up.
-* Slide in the inside assembly.
-* Slide in the visor assembly, attach with (2) M3-10mm (or longer) screws.
-* Slide on the visor cover.
+1. Install controller and amp with (3) M2 screws.
+2. Wire everything up.
+3. Slide in the inside assembly.
+4. Slide in the visor assembly, attach with (2) M3-10mm (or longer) screws.
+5. Slide on the visor cover.
