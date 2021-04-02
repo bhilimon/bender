@@ -4,16 +4,16 @@ This is a talking Bender head from Futurama. It's controlled by a Adafruit Feath
 * He's colorful! 20 programmable NeoPixel LEDs that play various animations when talking and when idle.
 * Antenna is also a motion detector that can trigger audio.
 * Antenna is also a button to toggle modes (see below).
-* Initial / startup mode (see below).
 
 This project takes quite a bit of time to print, put together, and to gather and properly prep all your audio files. Make sure you read all the documentation about the issues I ran into and limitations before starting this project.
 
 ## Config Options
 Configurable options include:
 * Min/max wait times between playing random audio
-* Wait timer after playing audio before re-enabling the motion detector
-* Timer on changing eye colors
+* Motion detector wait timer (after playing audio)
+* Min/max on changing eye colors
 * Timer on changing teeth LED animations
+* Initial / startup mode (see below)
 * A basic config of every animation in the CircuitPython LED animation library is included (https://circuitpython.readthedocs.io/projects/led-animation/en/latest/index.html). You can easily modify them and enable/disable certain animations.
 
 ## Modes / Changing Modes
@@ -41,13 +41,13 @@ There are 3 modes, controlled by pushing the antenna down (it's also a button). 
   * You need a small button to mount inside the antenna base. I just glued a basic 6mm x 6mm x 5mm (H) breadboard button. If you use a different size switch you might have to tweak the two 3D models for the antenna parts. There is a small amount of extra space around my button.
 
 ## Wiring Diagram
-See doc/wiring-diagram.png
+See [doc/wiring-diagram.png](https://github.com/bhilimon/bender/blob/main/doc/wiring-diagram.png)
 
 ## 3D Printing
-See doc/PRINTING.md
+See [doc/PRINTING.md](https://github.com/bhilimon/bender/blob/main/doc/PRINTING.md)
 
 ## Assembly
-See doc/ASSEMBLY.md, there's a few assembly images as well.
+See [doc/ASSEMBLY.md](https://github.com/bhilimon/bender/blob/main/doc/ASSEMBLY.md), there's a few assembly images as well.
 
 ## Audio Files & Prep
 For copyright reasons no audio files are included. You'll have to find them online and convert them down to a low enough bitrate your microcontroller can support and to small enough file sizes for the flash storage limitations of the microcontroller. You can use the following guide to convert your files (https://learn.adafruit.com/microcontroller-compatible-audio-file-conversion).
