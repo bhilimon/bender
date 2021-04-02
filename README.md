@@ -26,7 +26,7 @@ There are 3 modes, controlled by pushing the antenna down (it's also a button). 
 * Adafruit Feather RP2040 (https://www.adafruit.com/product/4884)
   * Which microcontroller you use is flexible as long as it can support the inputs, outputs, CircuitPython, and the modules you need, mainly NeoPixels and audiobusio. This project does not use any analog inputs or outputs. The main concern is storage space for audio files, which is extremely limited on microcontrollers. The Adafruit RP2040 boards have 8MB of flash for storing audio files. Adafruit is also working on adding MP3 audio support on their RP2040 boards which will help with the storage limits. If you use a different microcontroller you might have to adjust 3D models for mounting holes and alignment of the USB power cable hole on the back of the head.
 * Adafruit I2S Audio Amp (https://www.adafruit.com/product/3006)
-  * See the audio notes / issues section below.
+  * See the audio notes / issues section below. Other amps will likely work, likely requiring wiring and code tweaks.
 * Adafruit Mini NeoPixels (https://www.adafruit.com/product/2959)
   * You will only need 20 NeoPixels but you _need_ ones with 0.66"/17mm spacing between LEDs to align properly with the teeth. You will not be able to mount NeoPixels with wider spacing.
   * I went with the "Mini" NeoPixels due to the lower power requirement to be sure I can power everything through the Feather. Even at 50% brightness they are plenty bright enough if you have pretty clear PLA for the teeth and eyes. Regular sized NeoPixels should work but have not been tested. They might draw too much power.
@@ -40,29 +40,34 @@ There are 3 modes, controlled by pushing the antenna down (it's also a button). 
 * Button
   * You need a small button to mount inside the antenna base. I just glued a basic 6mm x 6mm x 5mm (H) breadboard button. If you use a different size switch you might have to tweak the two 3D models for the antenna parts. There is a small amount of extra space around my button.
 
+## Wiring Diagram
+See doc/wiring-diagram.png
+
 ## 3D Printing
 See doc/PRINTING.md
 
 ## Assembly
-See doc/ASSEMBLY.md
+See doc/ASSEMBLY.md, there's a few assembly images as well.
 
 ## Audio Files & Prep
 For copyright reasons no audio files are included. You'll have to find them online and convert them down to a low enough bitrate your microcontroller can support and to small enough file sizes for the flash storage limitations of the microcontroller. You can use the following guide to convert your files (https://learn.adafruit.com/microcontroller-compatible-audio-file-conversion).
 
 ## Audio Notes / Issues
 At the time of this writing (April 2021) the RP2040 CPU is still brand new and there seems to be a few audio issues that need to be worked out with CircuitPython.
-  * The first audio file played always have noise/static. Any further audio plays fine.
-  * The CircuitPython audio playing() function is broken/unreliable so we can't use it to determine when audio is no longer playing. Since we want to show a special LED animation only when audio is playing, that's a problem. The current workaround for this is to add the length of the audio clip (in seconds) into the filename. For example "10-File.wav" means that file is 10 seconds long.
+  * The first audio file played always has noise/static. Any further audio usually plays fine. As a work around I play a 0.1 second .wav file on startup.
+  * The CircuitPython audio playing() function is bugged/broken/unreliable so we can't use it to determine when audio is/isn't playing. Since we want to show a special LED animation only when audio is playing, that's a problem. The current workaround for this is to add the length of the audio clip (in seconds) into the beginning of the filename. For example "07-File.wav" means that file is 7 seconds long. Needs 2 digits.
 
 I'm sure both of these issues will be fixed in future releases of CircuitPython. There are open bug reports.
 
-Unrelated to the issues above, the other issue you may have is audio being too loud or too quiet. You can't control the volume in CircuitPython and there is no easy volume control on the I2S (digital) amp. You can add a resistor to change the gain (see product page & data sheet) but I found it to still be too loud and had to modify the audio files to make them quieter.
+Unrelated to the issues above, the other issue you may have is audio being too loud or too quiet. You currently can't control the volume in CircuitPython and there is no easy volume control on the I2S (digital) amp. You can add a resistor to change the gain (see product page & guide) but I found it to still be too loud and had to modify the audio files to make them quieter. If the audiomixer module gets added to RP2040 boards in CircuitPython in the future it might offer some volume control.
 
 I also tried using an analog amp (https://www.adafruit.com/product/2130), controlled with PWM (audioiopwm), which does have a gain/volume control knob, but was getting a lot of white noise/interference from the LEDs despite having them on a non-shared PWM pin and keeping it away from other wiring. It also had the same audio issues listed above.
 
+So ... just keep in mind that prepping your audio files isn't quite as easy and downloading them, but it does work.
+
 ## Other Notes / Limitations
  * The teeth and eyes are separate NeoPixel chains since I don't want the eyes included in the animations. This can easily be changed by changing wiring and code. 
- * I was originally planning to make my own LED animations but once I found the CircuitPython LED animation library I ended up just using that since it has plenty of variety. Integrating your own custom animations will be tough since I use the AnimationSequence() class. I briefly pause the animation sequence while audio is playing to show the special "talking" animation, then resume it when audio is done.
+ * I was originally planning to make my own LED animations but once I found the CircuitPython LED animation library I ended up just using it since it has plenty of variety. Integrating your own custom animations will be tough since I use the AnimationSequence() class. I briefly pause the animation sequence while audio is playing to show the special "talking" animation, then resume it when audio is done.
  * Remember this is a microcontroller with not much storage space. You'll only be able to store a couple minutes of audio, total. 
  
  ## Credits

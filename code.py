@@ -1,3 +1,6 @@
+## Talking Bender Head
+## https://github.com/bhilimon/bender
+
 import board
 import digitalio
 import neopixel
@@ -5,7 +8,7 @@ import time
 import random
 import audiocore
 import audiobusio
-import audiopwmio
+#import audiomp3    # Experimental / future
 import adafruit_led_animation.color as color
 from os import listdir
 from adafruit_led_animation.sequence import AnimationSequence
@@ -33,12 +36,11 @@ button.pull = digitalio.Pull.UP
 
 # Setup audio
 audio = audiobusio.I2SOut(board.TX, board.RX, board.D25)
-#audio = audiopwmio.PWMAudioOut(board.TX)
 
 # Setup NeoPixels. My strip is GRB, others are RGB. 
-# Code isn't written with RGBW or GRBW strips, see CircuitPython doc if you have one. Code changes will be needed.
-teeth = neopixel.NeoPixel(board.D6, 18, brightness=0.5, auto_write=False, pixel_order=neopixel.GRB)
-eyes = neopixel.NeoPixel(board.D5, 2, brightness=0.5, auto_write=False, pixel_order=neopixel.GRB)
+# Code isn't written for RGBW or GRBW strips, see CircuitPython doc if you have one. Code changes will be needed.
+teeth = neopixel.NeoPixel(board.D6, 18, brightness=0.5, auto_write=False, pixel_order=neopixel.GRB, bpp=3)
+eyes = neopixel.NeoPixel(board.D5, 2, brightness=0.75, auto_write=False, pixel_order=neopixel.GRB, bpp=3)
 
 # Initial operating mode
 # 1 = periodic audio, motion detector on, lights on
@@ -72,12 +74,15 @@ colors = [  color.RED,
             color.MAGENTA,
             #color.OLD_LACE,
             #color.WHITE,
-            #color.BLACK, #led off
+            #color.BLACK, #LED off
             color.ORANGE,
             color.PINK,
             color.PURPLE,
             color.TEAL,
-            color.YELLOW ]
+            color.YELLOW,
+            (50, 50, 255),
+            (255, 50, 50),
+            (50, 255, 50) ]
 
 # Configure animations
 animation1 = Blink(teeth, speed=0.5, color=random.choice(colors))
@@ -122,23 +127,24 @@ print("-----Starting-----")
 
 def play_audio():
 
-    # Load a random audio file, get the lenth from the first 2 characters of the file name
+    # Play a random audio file
+    # Couple workarounds while audio.playing() is bugged? in CircuitPython
+    # Get the length from the first 2 characters of the file name
     files = [f for f in listdir("audio")]
     file = random.choice(files)
-    #file = "01-Front_Center.wav"
     length = int(file[:2])
     data = open("audio/" + file, "rb")
-    wav = audiocore.WaveFile(data)
-    audio.play(wav, loop=False)
+    a = audiocore.WaveFile(data)
+    #a = audiomp3.MP3Decoder(data)  # Experimental / future
+    audio.play(a, loop=False)
 
     # Teeth "talking" animation for as long as the audio is playing
-    # Hack while audio.playing() is bugged? in CircuitPython
     animations.freeze()
     last_audio = time.monotonic()
-
     i = 0
     eyes.fill(color.WHITE)
     eyes.show()
+    #while audio.playing:   # Currently bugged? in CircuitPython
     while(time.monotonic() - last_audio) < (length + 0.5):
         set1 = [0, 2, 4, 7, 9, 11, 12, 14, 16]
         set2 = [1, 3, 5, 6, 8, 10, 13, 15, 17]
@@ -157,7 +163,7 @@ def play_audio():
         time.sleep(.2)
         i += 1
 
-    # Reset audio, restore animations
+    # Close audio file, resume animations
     data.close()
     time.sleep(1)
     eyes[0] = random.choice(colors)
@@ -165,11 +171,11 @@ def play_audio():
     eyes.show()
     animations.resume()
 
-# Workaround for first audio play always being distorted.
+# Workaround for first audio played always being distorted. Play a 0.1 second blank file.
 data = open("blank.wav", "rb")
-wav = audiocore.WaveFile(data)
-audio.play(wav, loop=False)
-time.sleep(3)
+a = audiocore.WaveFile(data)
+audio.play(a, loop=False)
+time.sleep(.2)
 data.close()
 
 # Main loop
@@ -185,71 +191,62 @@ while True:
         elif mode == 3:
             mode = 1
 
-    # Normal modes, audio with (1) and without (2) motion detector
+    # Do mode changes
+    if mode != prev_mode:
+        if mode == 1:
+            print("Changed to mode 1")
+            teeth[0] = color.BLUE
+            for p in range(1,18):
+                teeth[p] = color.BLACK
+
+        elif mode == 2:
+            print("Changed to mode 2")
+            teeth[0] = color.BLUE
+            teeth[1] = color.BLUE
+            for p in range(2,18):
+                teeth[p] = color.BLACK
+
+        elif mode == 3:
+            print("Changed to mode 3")
+            teeth[0] = color.BLUE
+            teeth[1] = color.BLUE
+            teeth[2] = color.BLUE
+            for p in range(3,18):
+                teeth[p] = color.BLACK
+        
+        prev_mode = mode
+        teeth.show()
+        time.sleep(1) #Debounce wait
+
+    # Check to see if we need to play a random audio file. Also reset audio timers so we don't get too much audio.
     if mode == 1 or mode == 2:
-
-        # Detect mode change
-        if mode != prev_mode:
-            if mode == 1:
-                print("Changed to mode 1")
-                prev_mode = mode
-                teeth[0] = color.BLUE
-                for p in range(1,18):
-                    teeth[p] = color.BLACK
-                teeth.show()
-                time.sleep(1)
-
-            else:
-                print("Changed to mode 2")
-                prev_mode = mode
-                teeth[0] = color.BLUE
-                teeth[1] = color.BLUE
-                for p in range(2,18):
-                    teeth[p] = color.BLACK
-                teeth.show()
-                time.sleep(1)
-
-        # Check to see if we need to play a random audio file. Also reset the motion timer so we don't get too much audio 
         if time.monotonic() > next_audio:
             next_audio = time.monotonic() + random.randint(min_audio_timer, max_audio_timer)
             last_motion = time.monotonic()
             print("Play random audio")
             play_audio()
 
-        if mode == 1:
-            # Check to see if we should look for motion.
-            if (time.monotonic() - last_motion) > motion_timer:
-                if motion.value == True:
-                    next_audio = time.monotonic() + random.randint(min_audio_timer, max_audio_timer)
-                    last_motion = time.monotonic()
-                    print("Motion detected")
-                    play_audio()
+    # Check to see if we should look for motion. Also reset audio timers so we don't get too much audio.
+    if mode == 1:
+        if (time.monotonic() - last_motion) > motion_timer:
+            if motion.value == True:
+                next_audio = time.monotonic() + random.randint(min_audio_timer, max_audio_timer)
+                last_motion = time.monotonic()
+                print("Motion detected")
+                play_audio()
 
-    # Quiet mode
-    elif mode == 3:
-        if mode != prev_mode:
-            print("Changed to mode 3")
-            prev_mode = mode
-            teeth[0] = color.BLUE
-            teeth[1] = color.BLUE
-            teeth[2] = color.BLUE
-            for p in range(3,18):
-                teeth[p] = color.BLACK
-            teeth.show()
-            time.sleep(1)
-
-    # Change eye color
+    # Check to see if we should change eye colors
     if time.monotonic() > next_left_eye:
         next_left_eye = time.monotonic() + random.randint(min_eye_timer, max_eye_timer)
-        eyes[0] = random.choice(colors)
+        eyes[1] = random.choice(colors)
         eyes.show()
     
     if time.monotonic() > next_right_eye:
         next_right_eye = time.monotonic() + random.randint(min_eye_timer, max_eye_timer)
-        eyes[1] = random.choice(colors)
+        eyes[0] = random.choice(colors)
         eyes.show()
 
-    # Show LED animations 
+    # LED animations 
     animations.animate()
 
 ###
