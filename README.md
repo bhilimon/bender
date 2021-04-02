@@ -1,4 +1,4 @@
-This is a talking Bender head from Futurama. It's controlled by a Adafruit Feather RP2040 microcontroller and CircuitPython. The main features are:
+This is a talking Bender head from Futurama. It's controlled by a [Adafruit Feather RP2040](https://www.adafruit.com/product/4884) microcontroller and [CircuitPython](https://circuitpython.org/). The main features are:
 
 * He talks! Plays random audio files at random intervals.
 * He's colorful! 20 programmable NeoPixel LEDs that play various animations when talking and when idle.
@@ -6,6 +6,9 @@ This is a talking Bender head from Futurama. It's controlled by a Adafruit Feath
 * Antenna is also a button to toggle modes (see below).
 
 This project takes quite a bit of time to print, put together, and to gather and properly prep all your audio files. Make sure you read all the documentation about the issues I ran into and limitations before starting this project.
+
+## Images
+See [images](https://github.com/bhilimon/bender/tree/main/images).
 
 ## Config Options
 Configurable options include:
@@ -47,7 +50,7 @@ See [doc/wiring-diagram.png](https://github.com/bhilimon/bender/blob/main/doc/wi
 See [doc/PRINTING.md](https://github.com/bhilimon/bender/blob/main/doc/PRINTING.md)
 
 ## Assembly
-See [doc/ASSEMBLY.md](https://github.com/bhilimon/bender/blob/main/doc/ASSEMBLY.md), there's a few assembly images as well.
+See [doc/ASSEMBLY.md](https://github.com/bhilimon/bender/blob/main/doc/ASSEMBLY.md), there's a few assembly [images](https://github.com/bhilimon/bender/tree/main/images) as well.
 
 ## Audio Files & Prep
 For copyright reasons no audio files are included. You'll have to find them online and convert them down to a low enough bitrate your microcontroller can support and to small enough file sizes for the flash storage limitations of the microcontroller. You can use the following guide to convert your files (https://learn.adafruit.com/microcontroller-compatible-audio-file-conversion).
@@ -70,5 +73,5 @@ So ... just keep in mind that prepping your audio files isn't quite as easy and 
  * I was originally planning to make my own LED animations but once I found the CircuitPython LED animation library I ended up just using it since it has plenty of variety. Integrating your own custom animations will be tough since I use the AnimationSequence() class. I briefly pause the animation sequence while audio is playing to show the special "talking" animation, then resume it when audio is done.
  * Remember this is a microcontroller with not much storage space. You'll only be able to store a couple minutes of audio, total. 
  
- ## Credits
- The original idea and 3D model came from another project (https://www.thingiverse.com/thing:4384974). I completely changed the electronics and code to run from a microcontroller instead of a Raspberry Pi. I've made some various changes to the some 3D models to support my hardware and project changes. The original files as well as updated files are all available as well as the editable sources if you need to tweak things.
+## Credits
+The original idea and 3D model came from another project (https://www.thingiverse.com/thing:4384974). I completely changed the electronics and code to run from a microcontroller instead of a Raspberry Pi. I've made some various changes to the some 3D models to support my hardware and project changes. The original files as well as updated files are all available as well as the editable sources if you need to tweak things.
