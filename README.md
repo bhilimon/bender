@@ -7,7 +7,7 @@ This is a talking Bender head from Futurama. It's controlled by a [Adafruit Feat
 * Antenna is also a motion detector that can trigger audio.
 * Antenna is also a button to toggle modes (see below).
 
-[Video](https://www.youtube.com]
+A quick video showing what it looks like: [https://youtu.be/TiZu5_Vf4qA](https://youtu.be/TiZu5_Vf4qA)
 
 This project takes quite a bit of time to print, put together, and to gather and properly prep all your audio files. Make sure you read all the documentation about the issues I ran into and limitations before starting this project. 
 
