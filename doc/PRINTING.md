@@ -61,5 +61,5 @@ Lots of parts to print. I've noted the colors you should print if you don't plan
 * Color: gray
 
 ### Base (optional)
-* Print "benderbase.stl" if you want the flared base / neck. This is optional. He will stand without it, but looks much better with it!
+* Print "benderbase.stl" if you want the flared base / neck. This is optional. He will stand without it.
 * Color: gray

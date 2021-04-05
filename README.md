@@ -1,3 +1,5 @@
+![Head](https://github.com/bhilimon/bender/blob/main/images/head.jpg)
+
 This is a talking Bender head from Futurama. It's controlled by a [Adafruit Feather RP2040](https://www.adafruit.com/product/4884) microcontroller and [CircuitPython](https://circuitpython.org/). The main features are:
 
 * He talks! Plays random audio files at random intervals.
@@ -5,7 +7,11 @@ This is a talking Bender head from Futurama. It's controlled by a [Adafruit Feat
 * Antenna is also a motion detector that can trigger audio.
 * Antenna is also a button to toggle modes (see below).
 
-This project takes quite a bit of time to print, put together, and to gather and properly prep all your audio files. Make sure you read all the documentation about the issues I ran into and limitations before starting this project.
+[Video](https://www.youtube.com]
+
+This project takes quite a bit of time to print, put together, and to gather and properly prep all your audio files. Make sure you read all the documentation about the issues I ran into and limitations before starting this project. 
+
+[Thingiverse Page](https://www.thingiverse.com/thing:4384974)
 
 ## Images
 See [images](https://github.com/bhilimon/bender/tree/main/images).
