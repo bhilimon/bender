@@ -11,7 +11,7 @@ A quick video showing what it looks like: [https://youtu.be/TiZu5_Vf4qA](https:/
 
 This project takes quite a bit of time to print, put together, and to gather and properly prep all your audio files. Make sure you read all the documentation about the issues I ran into and limitations before starting this project. 
 
-[Thingiverse Page](https://www.thingiverse.com/thing:4384974)
+[Thingiverse Page](https://www.thingiverse.com/thing:4816306)
 
 ## Images
 See [images](https://github.com/bhilimon/bender/tree/main/images).
