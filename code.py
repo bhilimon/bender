@@ -8,6 +8,7 @@ import time
 import random
 import audiocore
 import audiobusio
+import audiomixer
 #import audiomp3    # Experimental / future
 import adafruit_led_animation.color as color
 from os import listdir
@@ -36,6 +37,10 @@ button.pull = digitalio.Pull.UP
 
 # Setup audio
 audio = audiobusio.I2SOut(board.TX, board.RX, board.D25)
+volume = 0.1  #0.0 thru 1.0
+mixer = audiomixer.Mixer(voice_count=1, sample_rate=11025, channel_count=1, bits_per_sample=16, samples_signed=True)
+audio.play(mixer)
+mixer.voice[0].level = volume
 
 # Setup NeoPixels. My strip is GRB, others are RGB. 
 # Code isn't written for RGBW or GRBW strips, see CircuitPython doc if you have one. Code changes will be needed.
@@ -128,15 +133,14 @@ print("-----Starting-----")
 def play_audio():
 
     # Play a random audio file
-    # Couple workarounds while audio.playing() is bugged? in CircuitPython
-    # Get the length from the first 2 characters of the file name
     files = [f for f in listdir("audio")]
     file = random.choice(files)
-    length = int(file[:2])
     data = open("audio/" + file, "rb")
     a = audiocore.WaveFile(data)
     #a = audiomp3.MP3Decoder(data)  # Experimental / future
-    audio.play(a, loop=False)
+    #audio.play(a, loop=False)
+    mixer.voice[0].play(a, loop=False)
+
 
     # Teeth "talking" animation for as long as the audio is playing
     animations.freeze()
@@ -144,8 +148,7 @@ def play_audio():
     i = 0
     eyes.fill(color.WHITE)
     eyes.show()
-    #while audio.playing:   # Currently bugged? in CircuitPython
-    while(time.monotonic() - last_audio) < (length + 0.5):
+    while mixer.playing:   # Currently bugged? in CircuitPython
         set1 = [0, 2, 4, 7, 9, 11, 12, 14, 16]
         set2 = [1, 3, 5, 6, 8, 10, 13, 15, 17]
         if (i % 2) == 0:
@@ -170,13 +173,6 @@ def play_audio():
     eyes[1] = random.choice(colors)
     eyes.show()
     animations.resume()
-
-# Workaround for first audio played always being distorted. Play a 0.1 second blank file.
-data = open("blank.wav", "rb")
-a = audiocore.WaveFile(data)
-audio.play(a, loop=False)
-time.sleep(.2)
-data.close()
 
 # Main loop
 while True:

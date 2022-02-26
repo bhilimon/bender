@@ -33,7 +33,7 @@ There are 3 modes, controlled by pushing the antenna down (it's also a button). 
 
 ## Parts List
 * [Adafruit Feather RP2040](https://www.adafruit.com/product/4884)
-  * Which microcontroller you use is flexible as long as it can support the inputs, outputs, CircuitPython, and the modules you need, mainly NeoPixels and audiobusio. This project does not use any analog inputs or outputs. The main concern is storage space for audio files, which is extremely limited on microcontrollers. The Adafruit RP2040 boards have 8MB of flash for storing audio files. Adafruit is also working on adding MP3 audio support on their RP2040 boards which will help with the storage limits. If you use a different microcontroller you might have to adjust 3D models for mounting holes and alignment of the USB power cable hole on the back of the head.
+  * Which microcontroller you use is flexible as long as it can support the inputs, outputs, CircuitPython, and the modules you need, mainly NeoPixels, audiobusio, and audiomixer. This project does not use any analog inputs or outputs. The main concern is storage space for audio files, which is extremely limited on microcontrollers. The Adafruit RP2040 boards have 8MB of flash for storing audio files. Adafruit is also working on adding MP3 audio support on their RP2040 boards which will help with the storage limits. If you use a different microcontroller you might have to adjust 3D models for mounting holes and alignment of the USB power cable hole on the back of the head.
 * [Adafruit I2S Audio Amp](https://www.adafruit.com/product/3006)
   * See the audio notes / issues section below. Other amps will likely work, likely requiring wiring and code tweaks.
 * [Adafruit Mini NeoPixels](https://www.adafruit.com/product/2959)
@@ -58,21 +58,10 @@ See [doc/PRINTING.md](https://github.com/bhilimon/bender/blob/main/doc/PRINTING.
 ## Assembly
 See [doc/ASSEMBLY.md](https://github.com/bhilimon/bender/blob/main/doc/ASSEMBLY.md), there's a few assembly [images](https://github.com/bhilimon/bender/tree/main/images) as well.
 
-## Audio Files & Prep
-For copyright reasons no audio files are included. You'll have to find them online and convert them down to a low enough bitrate your microcontroller can support and to small enough file sizes for the flash storage limitations of the microcontroller. You can use [this guide](https://learn.adafruit.com/microcontroller-compatible-audio-file-conversion) to convert your files.
+## Audio Files, Prep, and Issues
+For copyright reasons no audio files are included. You'll have to find them online and convert them down to a low enough bitrate your microcontroller can support and to small enough file sizes for the flash storage limitations of the microcontroller. You can use [this guide](https://learn.adafruit.com/microcontroller-compatible-audio-file-conversion) to convert your files. 
 
-## Audio Notes / Issues
-At the time of this writing (April 2021) the RP2040 CPU is still brand new and there seems to be a few audio issues that need to be worked out with CircuitPython.
-  * The first audio file played always has noise/static. Any further audio usually plays fine. As a work around I play a 0.1 second .wav file on startup.
-  * The CircuitPython audio playing() function is bugged/broken/unreliable so we can't use it to determine when audio is/isn't playing. Since we want to show a special LED animation only when audio is playing, that's a problem. The current workaround for this is to add the length of the audio clip (in seconds) into the beginning of the filename. For example "07-File.wav" means that file is 7 seconds long. Needs 2 digits.
-
-I'm sure both of these issues will be fixed in future releases of CircuitPython. There are open bug reports.
-
-Unrelated to the issues above, the other issue you may have is audio being too loud or too quiet. You currently can't control the volume in CircuitPython and there is no easy volume control on the I2S (digital) amp. You can add a resistor to change the gain (see product page & guide) but I found it to still be too loud and had to modify the audio files to make them quieter. If the audiomixer module gets added to RP2040 boards in CircuitPython in the future it might offer some volume control.
-
-I also tried using an [analog amp](https://www.adafruit.com/product/2130), controlled with PWM (audioiopwm), which does have a gain/volume control knob, but was getting a lot of white noise/interference from the LEDs despite having them on a non-shared PWM pin and keeping it away from other wiring. It also had the same audio issues listed above.
-
-So ... just keep in mind that prepping your audio files isn't quite as easy and downloading them, but it does work.
+I use 11025 Hz, 16 bit, mono audio files which works good. I have some weird audio chirping / noise when using 22050 Hz audio files. I don't know why, but going down to 11025 Hz works fine and there is no noticeable loss of quality.
 
 ## Other Notes / Limitations
  * The teeth and eyes are separate NeoPixel chains since I don't want the eyes included in the animations. This can easily be changed by changing wiring and code. 
@@ -81,3 +70,11 @@ So ... just keep in mind that prepping your audio files isn't quite as easy and 
  
 ## Credits
 The original idea and 3D model came from [another project](https://www.thingiverse.com/thing:4384974). I completely changed the electronics and code to run from a microcontroller instead of a Raspberry Pi. I've made some various changes to the some 3D models to support my hardware and project changes. The original files as well as updated files are all available as well as the editable sources if you need to tweak things.
+
+## Change Log
+2/26/2022
+ * Removed workarounds for audio playback issues that were fixed in CircuitPython 7.
+ * Added audiomixer module as a method to control volume, which also came in CircuitPython 7.
+
+4/5/2021
+ * Initial rev
